@@ -84,6 +84,16 @@ export default function CampaignPage() {
     return b.contributedBalance - a.contributedBalance;
   });
 
+  const images = [
+    { url: "/openai-api.png", caption: "OpenAI API Key (0.1 SOL)" },
+    { url: "/agi.png", caption: "GPT-5 (5 SOL)" },
+  ];
+
+  const isFirstImageGreyedOut = () => {
+    // Convert totalContributed to SOL (assuming it's in Lamport)
+    const totalContributedInSOL = campaignInfo.totalContributed / 1000000000;
+    return totalContributedInSOL < 0.1;
+  };
 
   return (
     <Layout>
@@ -132,6 +142,7 @@ export default function CampaignPage() {
           </div>
         </div>
         <div className="card mx-8 border-2 border-base-content bg-base-100 shadow-xl">
+          <h1 className="text-2xl text-center">Leaderboard</h1>
           <div className="overflow-x-auto">
             <table className="table">
               <thead>
@@ -155,6 +166,16 @@ export default function CampaignPage() {
               ))}
               </tbody>
             </table>
+          </div>
+        </div>
+        <div className="card mx-8 my-4 border-2 border-base-content bg-base-100 shadow-xl">
+          <div className="flex overflow-x-auto py-4" style={{ maxHeight: "300px" }}>
+            {images.map((image, index) => (
+                <div key={index} className={`flex-none w-60 mx-2 ${isFirstImageGreyedOut() && index === 0 ? 'opacity-10' : ''}`}>
+                  <img src={image.url} alt={`Image ${index + 1}`} className="w-full h-auto rounded" />
+                  <p className="mt-2 text-center">{image.caption}</p>
+                </div>
+            ))}
           </div>
         </div>
 
