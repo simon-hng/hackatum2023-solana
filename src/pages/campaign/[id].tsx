@@ -75,6 +75,7 @@ export default function CampaignPage() {
 
   const hasDeadlinePassed = () => {
     const now = new Date();
+    // @ts-ignore
     const deadline = new Date(campaignInfo.deadline * 1000);
     return now > deadline;
   };
