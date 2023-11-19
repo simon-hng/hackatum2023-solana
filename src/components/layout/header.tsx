@@ -1,4 +1,6 @@
 import Link from "next/link";
+import Image from "next/image";
+import logo from "../public/logo_black.svg";
 
 export const Header = () => (
   <div className="navbar bg-base-100">
@@ -19,6 +21,7 @@ export const Header = () => (
           className="input input-bordered w-24 md:w-auto"
         />
       </div>
+        <Image src={logo} alt="Crowdlana Logo" />
     </div>
   </div>
 );
