@@ -84,14 +84,15 @@ export default function CampaignPage() {
         <article className="grid grid-cols-2 gap-8 p-8">
           <Image
             className="rounded-2xl"
-            src="/campaign.png"
+            src="/altman.webp"
             width={500}
             height={500}
             alt="Kampaign"
           />
           <div className="flex flex-col gap-3">
-            <h1 className="text-bold text-4xl">Large Title</h1>
-            <p>Lorem ipsum {router.query.id}</p>
+            <h1 className="text-bold text-4xl">Rent Money</h1>
+            <p>You think crypto is turbolent? I invented AGI and still got fired! :(</p>
+            <p>Willing to trade OpenAI API Keys!</p>
             <div className="flex gap-2 items-center">
               <input
                   type="number"
@@ -104,6 +105,7 @@ export default function CampaignPage() {
                 Contribute
               </button>
             </div>
+            <p>Enter the amount in Lamport. Remember 1 SOL = 10^9 Lamport.</p>
           </div>
         </article>
         <div className="grid grid-cols-3 py-8">
