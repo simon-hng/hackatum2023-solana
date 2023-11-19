@@ -78,6 +78,13 @@ export default function CampaignPage() {
     return `${days}d ${hours}h ${minutes}m ${seconds}s`;
   };
 
+  const filteredContributors = (campaignInfo.contributors || []).filter(contributor =>
+      contributor.amount != 0
+  ).sort((a, b) => {
+    return b.contributedBalance - a.contributedBalance;
+  });
+
+
   return (
     <Layout>
       <section>
@@ -124,161 +131,33 @@ export default function CampaignPage() {
             <p>Time left</p>
           </div>
         </div>
-
         <div className="card mx-8 border-2 border-base-content bg-base-100 shadow-xl">
           <div className="overflow-x-auto">
             <table className="table">
-              {/* head */}
               <thead>
-                <tr>
-                  <th></th>
-                  <th>Name</th>
-                  <th>Amount Pledged</th>
-                  <th></th>
-                </tr>
+              <tr>
+                <th></th>
+                <th>Public Key</th>
+                <th>Amount Pledged (Lamport)</th>
+                <th></th>
+              </tr>
               </thead>
               <tbody>
-                {/* row 1 */}
-                <tr>
-                  <th>
-                    <label>
-                      <input type="checkbox" className="checkbox" />
-                    </label>
-                  </th>
-                  <td>
-                    <div className="flex items-center gap-3">
-                      <div className="avatar">
-                        <div className="mask mask-squircle h-12 w-12">
-                          <img
-                            src="https://i.pravatar.cc/150?img=8"
-                            alt="Avatar Tailwind CSS Component"
-                          />
-                        </div>
-                      </div>
-                      <div>
-                        <div className="font-bold">Hart Hagerty</div>
-                        <div className="text-sm opacity-50">United States</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    $800
-                    <br />
-                    <span className="badge badge-ghost badge-sm">Solana</span>
-                  </td>
-                  <th className="flex-end flex justify-center">
-                    <button className="btn btn-success">TX Received</button>
-                  </th>
-                </tr>
-                {/* row 2 */}
-                <tr>
-                  <th>
-                    <label>
-                      <input type="checkbox" className="checkbox" />
-                    </label>
-                  </th>
-                  <td>
-                    <div className="flex items-center gap-3">
-                      <div className="avatar">
-                        <div className="mask mask-squircle h-12 w-12">
-                          <img
-                            src="https://i.pravatar.cc/150?img=2"
-                            alt="Avatar Tailwind CSS Component"
-                          />
-                        </div>
-                      </div>
-                      <div>
-                        <div className="font-bold">Brice Swyre</div>
-                        <div className="text-sm opacity-50">China</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    $300
-                    <br />
-                    <span className="badge badge-ghost badge-sm">Solana</span>
-                  </td>
-                  <th className="flex-end flex justify-center">
-                    <button className="btn btn-success">TX Received</button>
-                  </th>
-                </tr>
-                {/* row 3 */}
-                <tr>
-                  <th>
-                    <label>
-                      <input type="checkbox" className="checkbox" />
-                    </label>
-                  </th>
-                  <td>
-                    <div className="flex items-center gap-3">
-                      <div className="avatar">
-                        <div className="mask mask-squircle h-12 w-12">
-                          <img
-                            src="https://i.pravatar.cc/150?img=3"
-                            alt="Avatar Tailwind CSS Component"
-                          />
-                        </div>
-                      </div>
-                      <div>
-                        <div className="font-bold">Marjy Ferencz</div>
-                        <div className="text-sm opacity-50">Russia</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    $400
-                    <br />
-                    <span className="badge badge-ghost badge-sm">Solana</span>
-                  </td>
-                  <th className="flex-end flex justify-center">
-                    <button className="btn btn-success">TX Received</button>
-                  </th>
-                </tr>
-                {/* row 4 */}
-                <tr>
-                  <th>
-                    <label>
-                      <input type="checkbox" className="checkbox" />
-                    </label>
-                  </th>
-                  <td>
-                    <div className="flex items-center gap-3">
-                      <div className="avatar">
-                        <div className="mask mask-squircle h-12 w-12">
-                          <img
-                            src="https://i.pravatar.cc/150?img=4"
-                            alt="Avatar Tailwind CSS Component"
-                          />
-                        </div>
-                      </div>
-                      <div>
-                        <div className="font-bold">Yancy Tear</div>
-                        <div className="text-sm opacity-50">Brazil</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    $400
-                    <br />
-                    <span className="badge badge-ghost badge-sm">Solana</span>
-                  </td>
-                  <th className="flex-end flex justify-center">
-                    <button className="btn btn-success">TX Received</button>
-                  </th>
-                </tr>
+              {filteredContributors.map((contributor, index) => (
+                  <tr key={index}>
+                    <td>{index + 1}</td>
+                    <td>{contributor.publicKey}</td>
+                    <td>{contributor.contributedBalance}</td>
+                    <td className="text-center">
+                      <span className="badge badge-ghost badge-sm">Confirmed</span>
+                    </td>
+                  </tr>
+              ))}
               </tbody>
-              {/* foot */}
-              <tfoot>
-                <tr>
-                  <th></th>
-                  <th>Name</th>
-                  <th>Amount Pledged</th>
-                  <th></th>
-                </tr>
-              </tfoot>
             </table>
           </div>
         </div>
+
       </section>
     </Layout>
   );
