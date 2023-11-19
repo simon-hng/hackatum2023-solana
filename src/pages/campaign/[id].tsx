@@ -24,6 +24,7 @@ export default function CampaignPage() {
   const router = useRouter();
   const [campaignInfo, setCampaignInfo] = useState({}); // State to store campaign info
   const [contributionAmount, setContributionAmount] = useState('');
+  const [timeLeft, setTimeLeft] = useState(0);
 
   const fetchCampaignInfo = async () => {
     const campaignId = router.query.id; // Get campaign ID from URL
@@ -36,11 +37,46 @@ export default function CampaignPage() {
     });
     const data = await res.json();
     setCampaignInfo(data); // Set campaign info in state
+    const deadline = new Date(data.deadline * 1000); // Convert to milliseconds
+    const now = new Date();
+    //setTimeLeft(Math.max(deadline - now, 0));
+    initializeCountdown(data.deadline);
   };
+
+  const initializeCountdown = (deadline) => {
+    const deadlineDate = new Date(deadline * 1000); // Convert to milliseconds
+    const now = new Date();
+    setTimeLeft(Math.max(deadlineDate - now, 0));
+  };
+
   useEffect(() => {
     // Function to fetch campaign info
     fetchCampaignInfo();
   }, [router.query.id]);
+
+  useEffect(() => {
+    // Update time left every second
+    const interval = setInterval(() => {
+      const now = new Date();
+      setTimeLeft(prevTimeLeft => Math.max(prevTimeLeft - 1000, 0));
+    }, 1000);
+
+    return () => clearInterval(interval); // Clean up on unmount
+  }, []);
+
+  const formatTimeLeft = (milliseconds) => {
+    if (milliseconds <= 0) return '0';
+    let seconds = Math.floor(milliseconds / 1000);
+    let minutes = Math.floor(seconds / 60);
+    let hours = Math.floor(minutes / 60);
+    let days = Math.floor(hours / 24);
+
+    hours %= 24;
+    minutes %= 60;
+    seconds %= 60;
+
+    return `${days}d ${hours}h ${minutes}m ${seconds}s`;
+  };
 
   return (
     <Layout>
@@ -82,7 +118,7 @@ export default function CampaignPage() {
           </div>
 
           <div className="text-center">
-            <h2 className="text-2xl">{campaignInfo.timeRemaining > 0 ? campaignInfo.timeRemaining : 0}</h2>
+            <h2 className="text-2xl">{formatTimeLeft(timeLeft)}</h2>
             <p>Time left</p>
           </div>
         </div>
