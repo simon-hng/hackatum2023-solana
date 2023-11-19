@@ -10,6 +10,10 @@
   },
   "dependencies": {
     "@faker-js/faker": "^8.3.1",
+    "@project-serum/anchor": "^0.26.0",
+    "@solana/wallet-adapter-react": "^0.15.35",
+    "@solana/wallet-adapter-react-ui": "^0.9.34",
+    "@solana/web3.js": "^1.87.6",
     "@t3-oss/env-nextjs": "^0.7.0",
     "next": "^14.0.0",
     "next-auth": "^4.24.4",
