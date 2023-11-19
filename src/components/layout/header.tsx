@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import logo from "../public/logo_white.svg";
+import logo from "/public/logo_white.png";
 
 export const Header = () => (
   <div className="navbar bg-base-100">
