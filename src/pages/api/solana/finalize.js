@@ -12,7 +12,11 @@ const programID = new PublicKey("63EqqQAwr4ALGKmLtCnaKPiUvcytXjqu5iqMndqi3U76");
 async function getProvider() {
     const network = "https://api.devnet.solana.com";
     const connection = new Connection(network, opts.preflightCommitment);
-    const wallet = new Wallet(Keypair.generate())  // TODO: This should be user wallet once authorized
+    let secretKey = Uint8Array.from([
+        39,17,210,104,241,14,93,24,77,238,66,239,54,175,82,255,156,69,207,22,149,110,126,148,40,123,81,231,134,200,227,75,34,10,61,202,206,212,174,63,128,111,61,57,172,211,138,203,201,104,93,184,253,195,61,41,140,238,197,205,148,74,186,7
+    ]);
+    const keys = Keypair.fromSecretKey(secretKey)
+    const wallet = new Wallet(keys)  // TODO: This should be user wallet once authorized
     const provider = new AnchorProvider(
         connection, wallet, opts.preflightCommitment,
     );
