@@ -43,6 +43,28 @@ export default function CampaignPage() {
     initializeCountdown(data.deadline);
   };
 
+  const handlePayout = async () => {
+    const campaignId = router.query.id; // Get campaign ID from URL
+    const res = await fetch(`/api/solana/finalize`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ campaignId: campaignId}),
+    });
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const data = await res.json();
+    console.log(data)
+    fetchCampaignInfo();
+    // Handle response, e.g., show success message
+  };
+
+  const hasDeadlinePassed = () => {
+    const now = new Date();
+    const deadline = new Date(campaignInfo.deadline * 1000);
+    return now > deadline;
+  };
+
   const initializeCountdown = (deadline) => {
     const deadlineDate = new Date(deadline * 1000); // Convert to milliseconds
     const now = new Date();
@@ -110,18 +132,26 @@ export default function CampaignPage() {
             <h1 className="text-bold text-4xl">Rent Money</h1>
             <p>You think crypto is turbolent? I invented AGI and still got fired! :(</p>
             <p>Willing to trade OpenAI API Keys!</p>
-            <div className="flex gap-2 items-center">
-              <input
-                  type="number"
-                  placeholder="Contribution Amount"
-                  className="input input-bordered"
-                  value={contributionAmount}
-                  onChange={(e) => setContributionAmount(e.target.value)} // Update state on change
-              />
-              <button className="btn" onClick={() => handleContribute()}>
-                Contribute
-              </button>
-            </div>
+            {hasDeadlinePassed() ? (
+                // Render Pay out button after deadline
+                <button className="btn btn-success" onClick={handlePayout}>
+                  Pay out
+                </button>
+            ) : (
+                // Render Contribute button and input field before deadline
+                <div className="flex gap-2 items-center">
+                  <input
+                      type="number"
+                      placeholder="Contribution Amount"
+                      className="input input-bordered"
+                      value={contributionAmount}
+                      onChange={(e) => setContributionAmount(e.target.value)}
+                  />
+                  <button className="btn" onClick={() => handleContribute()}>
+                    Contribute
+                  </button>
+                </div>
+            )}
             <p>Enter the amount in Lamport. Remember 1 SOL = 10^9 Lamport.</p>
           </div>
         </article>
