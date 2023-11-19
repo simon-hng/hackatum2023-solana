@@ -29,6 +29,10 @@ export default async function handler(req, res) {
     if (campaignId === undefined || isNaN(Number(campaignId))) {
         campaignId = 1;
     }
+    let amount = req.body.amount;
+    if (amount === undefined || isNaN(Number(campaignId))) {
+        amount = 100000000;
+    }
     const provider = await getProvider();
     const program = new Program(idl, programID, provider);
     const [campaignAccountPk] = await web3.PublicKey.findProgramAddress(
@@ -41,7 +45,7 @@ export default async function handler(req, res) {
     console.log("Adding contribution");
     // Send transaction
     const txHash = await program.methods
-        .contribute(new BN(600000000))
+        .contribute(new BN(amount))
         .accounts({
             campaign: campaignAccountPk,
             contributor: provider.wallet.publicKey,

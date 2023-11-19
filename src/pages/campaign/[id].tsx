@@ -12,7 +12,7 @@ export default function CampaignPage() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ campaignId }),
+      body: JSON.stringify({ campaignId: campaignId, amount: contributionAmount}),
     });
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const data = await res.json();
@@ -23,6 +23,7 @@ export default function CampaignPage() {
 
   const router = useRouter();
   const [campaignInfo, setCampaignInfo] = useState({}); // State to store campaign info
+  const [contributionAmount, setContributionAmount] = useState('');
 
   const fetchCampaignInfo = async () => {
     const campaignId = router.query.id; // Get campaign ID from URL
@@ -55,7 +56,18 @@ export default function CampaignPage() {
           <div className="flex flex-col gap-3">
             <h1 className="text-bold text-4xl">Large Title</h1>
             <p>Lorem ipsum {router.query.id}</p>
-            <button className="btn" onClick={()=> handleContribute()}>Contribute</button>
+            <div className="flex gap-2 items-center">
+              <input
+                  type="number"
+                  placeholder="Contribution Amount"
+                  className="input input-bordered"
+                  value={contributionAmount}
+                  onChange={(e) => setContributionAmount(e.target.value)} // Update state on change
+              />
+              <button className="btn" onClick={() => handleContribute()}>
+                Contribute
+              </button>
+            </div>
           </div>
         </article>
         <div className="grid grid-cols-3 py-8">
