@@ -3,7 +3,7 @@ import Link from "next/link";
 export const Header = () => (
   <div className="navbar bg-base-100">
     <div className="flex-1">
-      <Link href="/campaigns" className="btn btn-ghost text-xl">
+      <Link href="/campaign" className="btn btn-ghost text-xl">
         Explore
       </Link>
 
