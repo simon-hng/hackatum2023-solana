@@ -17,6 +17,11 @@ export default function CampaignPage() {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const data = await res.json();
     console.log(data)
+    if (data.txhash) {
+      setTxHash(data.txhash); // Set the transaction hash
+      setShowAlert(true); // Show the alert
+    }
+
     fetchCampaignInfo();
     // Handle response, e.g., show success message
   };
@@ -25,6 +30,9 @@ export default function CampaignPage() {
   const [campaignInfo, setCampaignInfo] = useState({}); // State to store campaign info
   const [contributionAmount, setContributionAmount] = useState('');
   const [timeLeft, setTimeLeft] = useState(0);
+  const [txHash, setTxHash] = useState('');
+  const [showAlert, setShowAlert] = useState(false);
+
 
   const fetchCampaignInfo = async () => {
     const campaignId = router.query.id; // Get campaign ID from URL
@@ -55,6 +63,12 @@ export default function CampaignPage() {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const data = await res.json();
     console.log(data)
+
+    if (data.txhash) {
+      setTxHash(data.txhash); // Set the transaction hash
+      setShowAlert(true); // Show the alert
+    }
+
     fetchCampaignInfo();
     // Handle response, e.g., show success message
   };
@@ -119,6 +133,21 @@ export default function CampaignPage() {
 
   return (
     <Layout>
+      {showAlert && (
+          <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative my-3" role="alert">
+            <strong className="font-bold">Transaction Successful!</strong>
+            <span className="block sm:inline"> Check the transaction </span>
+            <a href={`https://explorer.solana.com/tx/${txHash}/?cluster=devnet`} className="underline" target="_blank" rel="noopener noreferrer">
+              here!
+            </a>
+            <span className="absolute top-0 bottom-0 right-0 px-4 py-3" onClick={() => setShowAlert(false)}>
+            <svg className="fill-current h-6 w-6 text-green-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+              <title>Close</title>
+              <path d="M14.348 14.859l-4.708-4.708 4.708-4.708a1.002 1.002 0 00-1.414-1.414L8.226 8.738l-4.708-4.708a1.002 1.002 0 10-1.414 1.414l4.708 4.708-4.708 4.708a1.002 1.002 0 101.414 1.414l4.708-4.708 4.708 4.708a1.002 1.002 0 001.414-1.414z"/>
+            </svg>
+          </span>
+          </div>
+      )}
       <section>
         <article className="grid grid-cols-2 gap-8 p-8">
           <Image
