@@ -40,7 +40,7 @@ export default function CampaignsPage() {
               here
             </a>
             <span className="block sm:inline"> and the campaign page </span>
-            <a href={`localhost:3000/campaign/${campaignId}`} className="underline" target="_blank" rel="noopener noreferrer">
+            <a href={`https://crowdlana.pro/campaign/${campaignId}`} className="underline" target="_blank" rel="noopener noreferrer">
               here!
             </a>
             <span className="absolute top-0 bottom-0 right-0 px-4 py-3" onClick={() => setShowAlert(false)}>
