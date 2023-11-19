@@ -181,7 +181,7 @@ export default function CampaignPage() {
                   </button>
                 </div>
             )}
-            <p>Enter the amount in Lamport. Remember 1 SOL = 10^9 Lamport.</p>
+            <p>Enter the amount in Lamport. Remember 1 SOL = 10^9 (100000000) Lamport.</p>
           </div>
         </article>
         <div className="grid grid-cols-3 py-8">
